@@ -930,7 +930,7 @@ class _VizabiBubbleChart extends Chart {
         limitMaxTickNumber: 6,
         bump: this.profileConstants.maxRadiusPx / 2,
         viewportLength: height,
-        formatter: this.localise
+        formatter: this.services.locale.auto(y.data?.conceptProps?.format)
       }, rankScaleModifications));
 
     this.xAxis.scale(this.xScale)
@@ -943,7 +943,7 @@ class _VizabiBubbleChart extends Chart {
         toolMargin: margin,
         bump: this.profileConstants.maxRadiusPx / 2,
         viewportLength: width,
-        formatter: this.localise
+        formatter: this.services.locale.auto(x.data?.conceptProps?.format)
       });
 
 
