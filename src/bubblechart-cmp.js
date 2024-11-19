@@ -842,8 +842,8 @@ class _VizabiBubbleChart extends Chart {
   }
 
   _updateScales() {
-    this.yScale = this.MDL.y.scale.d3Scale.copy();
-    this.xScale = this.MDL.x.scale.d3Scale.copy();
+    this.yScale = this.MDL.y.scale.d3Scale;
+    this.xScale = this.MDL.x.scale.d3Scale;
     this._labels.setScales(this.xScale, this.yScale);
   }
 
