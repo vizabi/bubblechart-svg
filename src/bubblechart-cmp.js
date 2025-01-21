@@ -374,10 +374,12 @@ class _VizabiBubbleChart extends Chart {
     this._date.setText(this.MDL.frame.value, duration);    
   }
 
-  __getColor(key, valueC) {
-    return valueC != null && !utils.isNaN(valueC) 
-      ? (this.MDL.color.scale.isPattern ? `url(#flag-${key}-${this.id})` : this.cScale(valueC)) 
-      : COLOR_WHITEISH;
+  __getColor(d, valueC) {
+    if (valueC == null || utils.isNaN(valueC)) return COLOR_WHITEISH;
+
+    if (this.MDL.color.scale.isPattern) return `url(#flag-${this.MDL.color.data.createKeyFn()(d)}-${this.id})`;
+    
+    return this.cScale(valueC); 
   }
   __getColorForTrail(valueC, valueS) {
     if(valueC == null || utils.isNaN(valueC) || this.MDL.color.scale.isPattern) return COLOR_BLACKISH; 
@@ -461,7 +463,7 @@ class _VizabiBubbleChart extends Chart {
             d.r = utils.areaToRadius(_this.sScale(valueS || 0));
             const scaledX = _this.xScale(valueX);
             const scaledY = _this.yScale(valueY);
-            const scaledC = _this.__getColor(d[Symbol.for(isTrail ? "trailHeadKey" : "key")], valueC);
+            const scaledC = _this.__getColor(d, valueC);
       
             if (!duration || !headTrail) {
               circle
@@ -535,7 +537,7 @@ class _VizabiBubbleChart extends Chart {
             //view.classed("vzb-hidden", d.hidden);
             const scaledX = _this.xScale(valueX);
             const scaledY = _this.yScale(valueY);
-            const scaledC = _this.__getColor(d[Symbol.for(isTrail ? "trailHeadKey" : "key")], valueC);
+            const scaledC = _this.__getColor(d, valueC);
       
             const group = d3.select(this);
             if (!duration || !headTrail) {
@@ -669,7 +671,7 @@ class _VizabiBubbleChart extends Chart {
       d.r = utils.areaToRadius(_this.sScale(valueS || 0));
       const scaledX = _this.xScale(valueX);
       const scaledY = _this.yScale(valueY);
-      const scaledC = _this.__getColor(d[Symbol.for(isTrail ? "trailHeadKey" : "key")], valueC);
+      const scaledC = _this.__getColor(d, valueC);
 
       const group = d3.select(this);
 
@@ -1248,7 +1250,7 @@ class _VizabiBubbleChart extends Chart {
       const x = _this.xScale(d[_this._alias("x")]);
       const y = _this.yScale(d[_this._alias("y")]);
       const s = d.r;
-      const c = _this.__getColor(selectedKey, d.color);
+      const c = _this.__getColor(d, d.color);
       let entityOutOfView = false;
 
       if (x + s < 0 || x - s > this.width || y + s < 0 || y - s > this.height) {
