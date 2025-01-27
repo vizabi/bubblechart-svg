@@ -295,7 +295,7 @@ class _VizabiBubbleChart extends Chart {
   }
 
   draw() {
-    this.localise = this.services.locale.auto(this.MDL.frame.interval);
+    this.localise = this.services.locale.auto({interval: this.MDL.frame.interval});
 
     //this.MDL.trail.config.show = false;
     //this.ui.cursorMode = "plus";
@@ -932,7 +932,7 @@ class _VizabiBubbleChart extends Chart {
         limitMaxTickNumber: 6,
         bump: this.profileConstants.maxRadiusPx / 2,
         viewportLength: height,
-        formatter: this.services.locale.auto(y.data?.conceptProps?.format)
+        formatter: this.services.locale.auto({shareOrPercent: y.data?.conceptProps?.format})
       }, rankScaleModifications));
 
     this.xAxis.scale(this.xScale)
@@ -945,7 +945,7 @@ class _VizabiBubbleChart extends Chart {
         toolMargin: margin,
         bump: this.profileConstants.maxRadiusPx / 2,
         viewportLength: width,
-        formatter: this.services.locale.auto(x.data?.conceptProps?.format)
+        formatter: this.services.locale.auto({shareOrPercent: x.data?.conceptProps?.format})
       });
 
 
