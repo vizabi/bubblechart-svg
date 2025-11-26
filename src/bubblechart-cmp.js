@@ -25,8 +25,11 @@ const THICK_LINE_THRESHOLD_FOR_DARKER_COLOR = 3;
 const marginScaleH = (marginMin, ratio = 0) => height => marginMin + height * ratio;
 const marginScaleW = (marginMin, ratio = 0) => width => marginMin + width * ratio;
 
+const KEY = Symbol.for("key");
+const TRAIL_KEY = Symbol.for("trailHeadKey");
+
 function isTrailBubble(d){
-  return !!d[Symbol.for("trailHeadKey")];
+  return !!d[TRAIL_KEY];
 }
 
 const MAX_RADIUS_EM = 0.05;
@@ -272,6 +275,7 @@ class _VizabiBubbleChart extends Chart {
     this.DOM.bubbleContainerCrop
       .call(this._panZoom.dragRectangle)
       .call(this._panZoom.zoomer)
+      .on("contextmenu", (evt) => evt.preventDefault())
       .on("dblclick.zoom", null)
       .on("mouseup", () => {
         _this.draggingNow = false;
@@ -440,6 +444,10 @@ class _VizabiBubbleChart extends Chart {
                 .on("click", (event, d) => {
                   if (this.ui.cursorMode !== "arrow" && this.ui.cursorMode !== "hand") return;
                   this._bubblesInteract().click(event, d);
+                })
+                .on("contextmenu", (event, d) => {
+                  if (this.ui.cursorMode !== "arrow" && this.ui.cursorMode !== "hand") return;
+                  this._bubblesInteract().rclick(event, d);
                 });
             } else {
               selection
@@ -1047,14 +1055,38 @@ class _VizabiBubbleChart extends Chart {
       },
 
       click(event, d) {
+        if (!d) return;
+        //invisible bubbles should not react to clicks
+        if (_this._getBubbleOpacity(d) == 0) return;
+        //no reaction on trail bubbles either
+        if (d[TRAIL_KEY]) return;
+        //no clicking while panning the view
         if (_this.draggingNow) return;
-        // // const isSelected = d.isSelected;
-        if (!isTrailBubble(d)) _this.MDL.selected.data.filter.toggle(d);
-        //_this.MDL.selected.data.filter.toggle(d);
-        // // //return to highlighted state
-        // // if (!utils.isTouchDevice()) {
-        // //   if (isSelected) _this.model.marker.highlightMarker(d);
-        // //   _this.highlightDataPoints();
+
+        _this.MDL.selected.data.filter.toggle(d);        
+      },
+
+      rclick(event, d) {
+        if (!d) return;
+        //invisible bubbles should not react to clicks
+        if (_this._getBubbleOpacity(d) == 0) return;
+        //no reaction on trail bubbles either
+        if (d[TRAIL_KEY]) return;
+        //no clicking while panning the view
+        if (_this.draggingNow) return;
+
+        const dataKey = {[KEY] : d[KEY]};
+        dataKey.name = _this.__labelWithoutFrame(d);
+        const margin = _this.profileConstants.margin;
+        const toolNode = _this.element.node();
+        const x = (_this.width - event.offsetX) < 250 ? _this.width - 250 : event.offsetX - 5;
+
+        //set context menu
+        const contextMenuComponent = _this.root.findChild({type: "MarkerContextmenu"});
+        contextMenuComponent.show(dataKey, {
+          x: toolNode.offsetLeft + x + margin.left * _this.profileConstants.leftMarginRatio,
+          y: toolNode.offsetTop + event.offsetY + margin.top - 5
+        });
       }
     };
   }
