@@ -261,6 +261,14 @@ class _VizabiBubbleChart extends Chart {
     });
 
     this._panZoom.zoomSelection(this.DOM.bubbleContainerCrop);
+    this.DOM.bubbleContainerCrop.node()
+      .addEventListener("wheel", e => {
+        if(!_this.ui?.zoomOnScrolling) return;
+        e.preventDefault();
+        e.stopPropagation();
+      },
+      { passive: false });
+
     this.DOM.bubbleContainerCrop
       .call(this._panZoom.dragRectangle)
       .call(this._panZoom.zoomer)
