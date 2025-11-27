@@ -1,6 +1,6 @@
 {
   "name": "@vizabi/bubblechart-svg",
-  "version": "4.5.1",
+  "version": "4.6.0",
   "description": "Vizabi bubble chart made with plain D3/SVG. Fast to load, not so fast to render a million bubbles!",
   "scripts": {
     "prepublishOnly": "npm run build",
@@ -9,7 +9,7 @@
     "build": "cross-env NODE_ENV=production rollup -c",
     "deploy": "tool-deploy"
   },
-  "main": "build/bubblechart.js",
+  "main": "build/bubblechart-svg.js",
   "files": [
     "build"
   ],

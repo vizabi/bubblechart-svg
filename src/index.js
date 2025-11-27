@@ -1,3 +1,3 @@
-import BubbleChart from "./bubblechart-tool.js";
+import BubbleChartSVG from "./bubblechart-tool.js";
 
-export {BubbleChart as Base};
+export {BubbleChartSVG as Base};

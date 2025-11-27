@@ -18,19 +18,19 @@ import {
 } from "@vizabi/shared-components";
 import {VizabiBubbleChart} from "./bubblechart-cmp.js";
 
-export default class BubbleChart extends BaseComponent {
+export default class BubbleChartSVG extends BaseComponent {
 
   constructor(config){
 
     const fullMarker = config.model.markers?.bubble;
     const fullMarkerLegend = config.model.markers?.legend;
-    config.Vizabi.utils.applyDefaults(fullMarker?.config || {}, BubbleChart.DEFAULT_MODEL.bubble);   
-    config.Vizabi.utils.applyDefaults(fullMarkerLegend?.config || {}, BubbleChart.DEFAULT_MODEL.legend);  
+    config.Vizabi.utils.applyDefaults(fullMarker?.config || {}, BubbleChartSVG.DEFAULT_MODEL.bubble);   
+    config.Vizabi.utils.applyDefaults(fullMarkerLegend?.config || {}, BubbleChartSVG.DEFAULT_MODEL.legend);  
 
     const frameType = config.Vizabi.stores.encodings.modelTypes.frame;
     const { marker, splashMarker } = frameType.splashMarker(fullMarker);
     
-    config.name = "bubblechart";
+    config.name = "bubblechart-svg";
 
     config.subcomponents = [{
       type: Repeater,
@@ -119,7 +119,7 @@ export default class BubbleChart extends BaseComponent {
   }
 }
 
-BubbleChart.DEFAULT_UI = {
+BubbleChartSVG.DEFAULT_UI = {
   "locale": { "id": "en", "shortNumberFormat": true },
   "layout": { "projector": false },
 
@@ -206,9 +206,9 @@ BubbleChart.DEFAULT_UI = {
   }
 };
 
-BubbleChart.mainComponent = VizabiBubbleChart;
+BubbleChartSVG.mainComponent = VizabiBubbleChart;
 
-BubbleChart.DEFAULT_MODEL = {
+BubbleChartSVG.DEFAULT_MODEL = {
   "bubble": {
     "requiredEncodings": ["x", "y", "size"],
     "encoding": {
@@ -317,4 +317,4 @@ BubbleChart.DEFAULT_MODEL = {
   },
 };
 
-BubbleChart.versionInfo = { version: __VERSION, build: __BUILD, package: __PACKAGE_JSON_FIELDS, sharedComponents: versionInfo};
+BubbleChartSVG.versionInfo = { version: __VERSION, build: __BUILD, package: __PACKAGE_JSON_FIELDS, sharedComponents: versionInfo};
