@@ -1,7 +1,7 @@
 {
-  "name": "@vizabi/bubblechart",
-  "version": "4.5.0",
-  "description": "Vizabi bubble chart",
+  "name": "@vizabi/bubblechart-svg",
+  "version": "4.5.1",
+  "description": "Vizabi bubble chart made with plain D3/SVG. Fast to load, not so fast to render a million bubbles!",
   "scripts": {
     "prepublishOnly": "npm run build",
     "link": "npm link ../shared-components",
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vizabi/bubblechart.git"
+    "url": "git+https://github.com/vizabi/bubblechart-svg.git"
   },
   "keywords": [],
   "author": {
@@ -42,9 +42,9 @@
   ],
   "license": "CC-BY-4.0",
   "bugs": {
-    "url": "https://github.com/vizabi/bubblechart/issues"
+    "url": "https://github.com/vizabi/bubblechart-svg/issues"
   },
-  "homepage": "https://github.com/vizabi/bubblechart#readme",
+  "homepage": "https://github.com/vizabi/bubblechart-svg#readme",
   "peerDependencies": {
     "@vizabi/shared-components": "*",
     "d3": "^6.7.0",
